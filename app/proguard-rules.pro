@@ -15,16 +15,3 @@
 
 # Android
 -keepclassmembers class * extends androidx.lifecycle.ViewModel { <init>(...); }
-
-# Firebase
--keep class io.grpc.** {*;}
-
-# Crashlytics
--keepattributes *Annotation*
--keepattributes SourceFile,LineNumberTable
--keep public class * extends java.lang.Exception
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
-
-# Billing
--keep class com.android.vending.billing.**

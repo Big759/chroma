@@ -17,7 +17,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FreeBreakfast
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
@@ -53,7 +52,6 @@ import cafe.adriel.chroma.model.tuner.TuningDeviationResult
 import cafe.adriel.chroma.view.ComposableScreen
 import cafe.adriel.chroma.view.components.AboutDialog
 import cafe.adriel.chroma.view.components.ActionPreference
-import cafe.adriel.chroma.view.components.DonateDialog
 import cafe.adriel.chroma.view.components.MessageSnackbar
 import cafe.adriel.chroma.view.components.RequestPermissionSnackbar
 import cafe.adriel.chroma.view.components.SelectPreference
@@ -92,7 +90,7 @@ class TunerScreen(
                     }
                 },
                 frontLayerContent = {
-                    TunerSettings(screenState.settings, screenState.isBillingSupported)
+                    TunerSettings(screenState.settings)
                 },
                 headerHeight = Dp.Hairline,
                 scaffoldState = scaffoldState
@@ -170,9 +168,8 @@ class TunerScreen(
         }
 
     @Composable
-    private fun TunerSettings(settings: Settings, isBillingSupported: Boolean) {
+    private fun TunerSettings(settings: Settings) {
         val (showAboutDialog, setAboutDialogVisible) = remember { mutableStateOf(false) }
-        val (showDonateDialog, setDonateDialogVisible) = remember { mutableStateOf(false) }
         val context = LocalContext.current
 
         LazyColumn {
@@ -235,13 +232,6 @@ class TunerScreen(
                     icon = Icons.Default.Person,
                     onClick = { setAboutDialogVisible(true) }
                 )
-                if (isBillingSupported) {
-                    ActionPreference(
-                        title = stringResource(R.string.buy_me_coffee),
-                        icon = Icons.Default.FreeBreakfast,
-                        onClick = { setDonateDialogVisible(true) }
-                    )
-                }
                 ActionPreference(
                     title = stringResource(R.string.share),
                     icon = Icons.Default.Share,
@@ -260,13 +250,6 @@ class TunerScreen(
 
         if (showAboutDialog) {
             AboutDialog(onClose = { setAboutDialogVisible(false) })
-        }
-
-        if (showDonateDialog) {
-            DonateDialog(
-                onDonate = viewModel::donate,
-                onClose = { setDonateDialogVisible(false) }
-            )
         }
     }
 }

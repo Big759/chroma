@@ -1,26 +1,19 @@
 package cafe.adriel.chroma.view.components
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Divider
@@ -32,10 +25,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.FreeBreakfast
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,10 +45,6 @@ import cafe.adriel.chroma.ktx.isEmail
 import cafe.adriel.chroma.ktx.open
 import cafe.adriel.chroma.ktx.sendContactEmail
 import cafe.adriel.chroma.model.ContactLink
-import cafe.adriel.chroma.model.DonationProduct
-import cafe.adriel.chroma.view.theme.ChromaColors
-
-private val DONATE_PICKER_WIDTH = 250.dp
 
 @Composable
 fun AboutDialog(onClose: () -> Unit) =
@@ -126,71 +112,6 @@ fun AboutDialog(onClose: () -> Unit) =
             }
         }
     }
-
-@Composable
-fun DonateDialog(onDonate: (DonationProduct) -> Unit, onClose: () -> Unit) {
-    val (selectedProduct, selectProduct) = remember { mutableStateOf(DonationProduct.COFFEE_1) }
-
-    AlertDialog(
-        onDismissRequest = onClose,
-        title = {
-            Text(
-                text = stringResource(R.string.buy_me_coffee),
-                style = MaterialTheme.typography.body1
-            )
-        },
-        text = {
-            Column {
-                Text(
-                    text = stringResource(R.string.app_content_free),
-                    style = MaterialTheme.typography.caption
-                )
-                DonatePicker(
-                    selectedProduct = selectedProduct,
-                    onSelect = selectProduct
-                )
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    onDonate(selectedProduct)
-                    onClose()
-                },
-                colors = ButtonDefaults.buttonColors(contentColor = MaterialTheme.colors.secondary),
-                modifier = Modifier.height(ButtonDefaults.MinHeight)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.FreeBreakfast,
-                        contentDescription = "Donate",
-                        modifier = Modifier.padding(end = 4.dp)
-                    )
-                    Text(
-                        text = stringResource(R.string.donate).uppercase(),
-                        style = MaterialTheme.typography.caption
-                    )
-                }
-            }
-        },
-        dismissButton = {
-            Button(
-                onClick = onClose,
-                colors = ButtonDefaults.buttonColors(contentColor = MaterialTheme.colors.onBackground),
-                modifier = Modifier.height(ButtonDefaults.MinHeight),
-            ) {
-                Text(
-                    text = stringResource(R.string.later).uppercase(),
-                    style = MaterialTheme.typography.caption
-                )
-            }
-        },
-        contentColor = MaterialTheme.colors.onBackground,
-        shape = RoundedCornerShape(16.dp)
-    )
-}
 
 @Composable
 private fun AboutHeader(onClose: () -> Unit) =
@@ -288,59 +209,3 @@ private fun RepositoryButton(modifier: Modifier = Modifier) {
         }
     }
 }
-
-@Composable
-private fun DonatePicker(selectedProduct: DonationProduct, onSelect: (DonationProduct) -> Unit) =
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .width(DONATE_PICKER_WIDTH)
-            .padding(horizontal = 24.dp)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        ) {
-            DonationProduct.values()
-                .map { product ->
-                    Text(
-                        text = product.label,
-                        color = if (product == selectedProduct) MaterialTheme.colors.secondary else ChromaColors.gray,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(horizontal = 4.dp)
-                    )
-                }
-        }
-        Box(
-            modifier = Modifier.width(DONATE_PICKER_WIDTH)
-        ) {
-            val selectedProductOffset by animateDpAsState(selectedProduct.offset)
-
-            Divider(
-                thickness = 4.dp,
-                color = ChromaColors.gray,
-                modifier = Modifier.align(Alignment.Center)
-            )
-            DonationProduct.values()
-                .map { product ->
-                    Spacer(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .clip(CircleShape)
-                            .background(ChromaColors.gray)
-                            .align(product.alignment)
-                            .clickable { onSelect(product) }
-                    )
-                }
-            Spacer(
-                modifier = Modifier
-                    .offset(x = selectedProductOffset)
-                    .padding(4.dp)
-                    .size(12.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colors.secondary)
-            )
-        }
-    }

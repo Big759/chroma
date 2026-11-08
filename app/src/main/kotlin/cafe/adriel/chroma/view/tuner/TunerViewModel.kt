@@ -2,12 +2,10 @@ package cafe.adriel.chroma.view.tuner
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cafe.adriel.chroma.manager.BillingManager
 import cafe.adriel.chroma.manager.MessagingManager
 import cafe.adriel.chroma.manager.PermissionManager
 import cafe.adriel.chroma.manager.SettingsManager
 import cafe.adriel.chroma.manager.TunerManager
-import cafe.adriel.chroma.model.DonationProduct
 import cafe.adriel.chroma.model.settings.Settings
 import cafe.adriel.chroma.model.tuner.Tuning
 import cafe.adriel.chroma.model.tuner.TuningDeviationPrecision
@@ -24,7 +22,6 @@ class TunerViewModel(
     private val tunerManager: TunerManager,
     private val settingsManager: SettingsManager,
     private val permissionManager: PermissionManager,
-    private val billingManager: BillingManager,
     private val messagingManager: MessagingManager
 ) : ViewModel() {
 
@@ -50,10 +47,6 @@ class TunerViewModel(
         settingsManager.settings = settings
     }
 
-    fun donate(product: DonationProduct) {
-        billingManager.donate(product)
-    }
-
     private fun setupState() {
         tunerManager.state
             .mergeState { state, tuning ->
@@ -72,12 +65,6 @@ class TunerViewModel(
             .mergeState { state, hasRequiredPermissions ->
                 tunerManager.restartListener()
                 state.copy(hasRequiredPermissions = hasRequiredPermissions)
-            }
-            .launchIn(viewModelScope)
-
-        billingManager.state
-            .mergeState { state, isBillingSupported ->
-                state.copy(isBillingSupported = isBillingSupported)
             }
             .launchIn(viewModelScope)
 

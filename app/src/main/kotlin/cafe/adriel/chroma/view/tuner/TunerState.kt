@@ -7,6 +7,5 @@ data class TunerState(
     val settings: Settings,
     val tuning: Tuning = Tuning(),
     val message: String? = null,
-    val hasRequiredPermissions: Boolean = false,
-    val isBillingSupported: Boolean = false
+    val hasRequiredPermissions: Boolean = false
 )

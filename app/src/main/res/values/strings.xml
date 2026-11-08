@@ -23,14 +23,9 @@
     <string name="hi_there_are_you_enjoying_the_app">Hi there! Are you enjoying the app? I hope so 😊\n\nIf you have any question, suggestion or want to contribute (new content, found a bug, translation…) please contact me using the links below.</string>
     <string name="this_app_is_open_source">This app is open source, contributions are very welcome!</string>
     <string name="about">About</string>
-    <string name="buy_me_coffee">Buy me a coffee</string>
     <string name="share">Share</string>
     <string name="rate_review">Rate &amp; Review</string>
     <string name="you_should_try">You should try Chroma app, this chromatic tuner is awesome!</string>
-    <string name="thanks_for_support">Thank you for your support! ☕ 😋</string>
-    <string name="later">Later</string>
-    <string name="donate">Donate</string>
-    <string name="app_content_free">This app and all its content are free.\nIf you\'re enjoying and want to support the development, feel free to buy me a ☕.</string>
 
     <string name="pitch_detection_algorithm_yin" translatable="false">YIN</string>
     <string name="pitch_detection_algorithm_fft_yin" translatable="false">FFT YIN (Fast Fourier Transform)</string>
