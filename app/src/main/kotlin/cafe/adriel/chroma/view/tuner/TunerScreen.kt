@@ -20,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import cafe.adriel.chroma.R
 import cafe.adriel.chroma.ktx.openExternalAppSettings
-import cafe.adriel.chroma.ktx.rateApp
 import cafe.adriel.chroma.ktx.shareApp
 import cafe.adriel.chroma.ktx.toggle
 import cafe.adriel.chroma.model.settings.AccidentalOption
@@ -236,11 +234,6 @@ class TunerScreen(
                     title = stringResource(R.string.share),
                     icon = Icons.Default.Share,
                     onClick = { context.shareApp() }
-                )
-                ActionPreference(
-                    title = stringResource(R.string.rate_review),
-                    icon = Icons.Default.Star,
-                    onClick = { context.rateApp() }
                 )
                 Spacer(
                     modifier = Modifier.height(12.dp)

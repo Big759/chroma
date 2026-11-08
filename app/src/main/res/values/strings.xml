@@ -24,7 +24,6 @@
     <string name="this_app_is_open_source">This app is open source, contributions are very welcome!</string>
     <string name="about">About</string>
     <string name="share">Share</string>
-    <string name="rate_review">Rate &amp; Review</string>
     <string name="you_should_try">You should try Chroma app, this chromatic tuner is awesome!</string>
 
     <string name="pitch_detection_algorithm_yin" translatable="false">YIN</string>

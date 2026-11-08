@@ -13,7 +13,6 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import cafe.adriel.chroma.BuildConfig
 import cafe.adriel.chroma.R
-import cafe.adriel.chroma.model.AppLink
 import cafe.adriel.chroma.model.ContactLink
 
 val Context.appVersion: String
@@ -26,19 +25,13 @@ fun Context.hasPermission(permission: String): Boolean =
 
 fun Context.shareApp() {
     runCatching {
-        val message = "${getString(R.string.you_should_try)}\n${AppLink.PLAY_STORE.url}"
+        val message = "${getString(R.string.you_should_try)}\n${ContactLink.PROJECT_REPO.url}"
         ShareCompat
             .IntentBuilder(this)
             .setText(message)
             .setType(ClipDescription.MIMETYPE_TEXT_PLAIN)
             .startChooser()
     }.onFailure(::logError)
-}
-
-fun Context.rateApp() {
-    runCatching { Uri.parse(AppLink.MARKET.url).open(this) }
-        .recover { Uri.parse(AppLink.PLAY_STORE.url).open(this) }
-        .onFailure(::logError)
 }
 
 fun Context.sendContactEmail() {
